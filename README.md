@@ -1,11 +1,11 @@
 # e-pluribus-unum-evalrs-2022
 Repo containing code and data for the analysis presented in: "E Pluribus Unum: Guidelines on Multi-Objective Evaluation of Recommender Systems"
 
-## Replicating EvalRS 2022 scoring
+## The Past: EvalRS 2022, Multi-Objective Evaluation in Practice
 
-Clone this repository and execute the following code from the root of the project.
+Clone this repository and execute the following code from the root of the project to replicate the original evaluation protocol in EvalRS 2022.
 
-## Reading the Submissions
+## Parsing the submissions
 
 ```python
 import pandas as pd
@@ -13,7 +13,8 @@ data = pd.read_parquet("./data/evalrs_2022_submissions.parquet.snappy")
 ```
 
 MRED is an equality difference measure and hence has to be minimized.
-Since the remaining evaluation metrics need to be maximized, we report here the negated MRED scores: the aggregated score has to be maximized.
+Since the remaining evaluation metrics need to be maximized, following Eq. 1 in the paper, **we report here the negated MRED scores**.
+As a result, the aggregated score has to be maximized.
 
 ## Computing Stage 1 Scores
 
@@ -43,10 +44,10 @@ data["score_1"] = get_score_stage_one(data)
 
 To compute the final score we 
 
-1. picked the best submission for each team in phase 1
-2. filtered our submissions with a hit rate threshold
-3. computed min-max normalization using a CBOW baseline (min) and the per-metric best (max)
-4. aggregated the metrics as describe in the paper
+1. picked the best submission for each team in phase 1;
+2. filtered our submissions with a hit-rate threshold;
+3. computed min-max normalization using a CBOW baseline (min) and the per-metric best (max). For your convenience, we added hardcoded metric values in the code below for both the baseline and the best results;
+4. aggregated the metrics with a weighted average. 
 
 Use the following code to replicate our process.
 
